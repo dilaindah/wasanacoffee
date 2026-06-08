@@ -3,6 +3,11 @@
 @section('title', 'Kelola Varian Produk - Wasana Coffee')
 
 @section('content')
+@if(session('success'))
+        <div class="mb-4 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm font-medium shadow-sm flex items-center gap-2">
+            ✅ {{ session('success') }}
+        </div>
+    @endif
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 pb-4 border-b border-amber-200/60 gap-4">
         <div>
             <h2 class="text-2xl font-bold text-amber-900">Kelola Varian Kopi</h2>

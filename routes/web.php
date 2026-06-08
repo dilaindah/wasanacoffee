@@ -3,14 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\LandingController; 
 use Illuminate\Support\Facades\Route;
 
 // ========================================================
 // 1. ROUTE BAWAAN BREEZE (UNTUK PELANGGAN / USER BIASA)
 // ========================================================
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Mengarahkan halaman utama lewat LandingController agar datanya dinamis
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -53,4 +54,4 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     // Menu hiasan sementara biar sidebar gak eror pas diklik
     Route::get('/pesanan', function() { return view('admin.dashboard'); })->name('admin.pesanan.index');
     Route::get('/laporan', function() { return view('admin.dashboard'); })->name('admin.laporan.index');
-}); 
+});

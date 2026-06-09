@@ -143,7 +143,7 @@
     </section>
 
     <footer class="py-12 text-center text-gray-500 text-sm bg-white border-t border-amber-50">
-        © 2026 Wasana Coffee Project
+        © 2026 Wasana Coffee 
     </footer>
 
 </body>

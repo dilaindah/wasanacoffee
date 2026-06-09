@@ -7,16 +7,24 @@ use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
 // ========================================================
-// 1. ROUTE BAWAAN BREEZE (UNTUK PELANGGAN / USER BIASA)
+// 1. ROUTE BAWAAN BREEZE & PEMBELI (USER BIASA)
 // ========================================================
 
 // Mengarahkan halaman utama lewat LandingController agar datanya dinamis
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
+// Halaman dashboard bawaan Laravel Breeze (Bisa dibiarkan dulu)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// --- REVISI: RUTE HALAMAN UTAMA PEMBELI (DI SINI TEMPATNYA YANG BENAR!) ---
+Route::get('/home', function () {
+    return view('home');
+})->middleware(['auth'])->name('home');
+
+
+// Fitur Profile bawaan Breeze
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -27,7 +35,7 @@ require __DIR__.'/auth.php';
 
 
 // ========================================================
-// 2. ROUTE KHUSUS ADMIN (YANG SUDAH DIRAPIKAN)
+// 2. ROUTE KHUSUS ADMIN (JANGAN DICAMPUR PELANGGAN)
 // ========================================================
 
 // --- ALAMAT LOGIN ADMIN (Di luar pengaman middleware) ---
@@ -43,7 +51,7 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // Fitur Kelola Produk Admin (CRUD) - Pakai Cara Manual yang Jelas & Rapi
+    // Fitur Kelola Produk Admin (CRUD)
     Route::get('/produk', [ProdukController::class, 'index'])->name('admin.produk.index');
     Route::get('/produk/tambah', [ProdukController::class, 'create'])->name('admin.produk.create');
     Route::post('/produk/tambah', [ProdukController::class, 'store'])->name('admin.produk.store');

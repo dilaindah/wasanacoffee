@@ -20,7 +20,7 @@
                     <a href="#produk" class="hover:text-amber-600 transition">Beli Kopi</a>
                     <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-amber-600 transition">WhatsApp</a>
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full">Akun Saya</a>
+                        <a href="{{ url('/home') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full">Akun Saya</a>
                     @else
                         <a href="{{ route('login') }}" class="hover:text-amber-600 transition">Login</a>
                         <a href="{{ route('register') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full hover:bg-amber-900 transition shadow-md">Register</a>
@@ -67,9 +67,15 @@
                     <p class="text-lg text-gray-700 leading-relaxed">
                         Biji kopi pilihan yang disangrai dengan presisi untuk menghasilkan aroma yang memikat dan body yang bold. Kami memastikan setiap kemasan yang sampai ke tangan Anda membawa kesegaran maksimal langsung dari hasil kebun petani lokal pilihan.
                     </p>
-                    <a href="{{ route('register') }}" class="inline-block bg-amber-800 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-amber-900 transition-all transform hover:scale-105 shadow-xl">
-                        Pesan Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
+                    @auth
+                        <a href="{{ route('home') }}" class="inline-block bg-amber-800 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-amber-900 transition-all transform hover:scale-105 shadow-xl">
+                            Pesan Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    @else
+                        <a href="{{ route('register') }}" class="inline-block bg-amber-800 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-amber-900 transition-all transform hover:scale-105 shadow-xl">
+                            Pesan Sekarang <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

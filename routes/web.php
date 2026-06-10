@@ -23,7 +23,7 @@ Route::get('/home', function () {
     return view('home');
 })->middleware(['auth'])->name('home');
 
-// --- 🚀 BARU: RUTE ALUR PEMESANAN KOPI (HARI 5) ---
+// --- 🚀 ALUR PEMESANAN KOPI (HARI 5) ---
 // 1. Halaman pilih varian ukuran & input Qty
 Route::get('/pesan-kopi', [LandingController::class, 'pilihVarian'])->middleware(['auth'])->name('pembeli.varian');
 
@@ -32,6 +32,11 @@ Route::post('/proses-pesanan', [LandingController::class, 'simpanPesanan'])->mid
 
 // 3. Halaman konfirmasi sukses setelah beli
 Route::get('/pesanan-sukses/{kode}', [LandingController::class, 'pesananSukses'])->middleware(['auth'])->name('pembeli.sukses');
+
+
+// --- 🚀 BARU: RUTE RIWAYAT PESANAN PEMBELI (HARI 6) ---
+// Tempat pembeli bisa melihat tabel status transaksinya (menunggu, diproses, dikirim, selesai)
+Route::get('/riwayat-pesanan', [LandingController::class, 'riwayatPesanan'])->middleware(['auth'])->name('pembeli.riwayat');
 
 
 // Fitur Profile bawaan Breeze

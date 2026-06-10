@@ -71,7 +71,6 @@ class LandingController extends Controller
         $id_pelanggan = Auth::id(); 
 
         // PROSES INPUT TABEL 1: pesanan (Induk)
-        // insertGetId digunakan untuk mengambil ID pesanan yang baru saja tercipta untuk dipakai di tabel detail
         $id_pesanan_baru = DB::table('pesanan')->insertGetId([
             'id_pelanggan' => $id_pelanggan,
             'kode_pesanan' => $kode_pesanan,
@@ -82,7 +81,6 @@ class LandingController extends Controller
         ]);
 
         // PROSES INPUT TABEL 2: detail_pesanan (Anak)
-        // Jika varian 100g dibeli, masukkan datanya
         if ($qty_100g > 0) {
             DB::table('detail_pesanan')->insert([
                 'id_pesanan' => $id_pesanan_baru,
@@ -93,7 +91,6 @@ class LandingController extends Controller
             ]);
         }
 
-        // Jika varian 250g dibeli, masukkan datanya
         if ($qty_250g > 0) {
             DB::table('detail_pesanan')->insert([
                 'id_pesanan' => $id_pesanan_baru,
@@ -123,5 +120,36 @@ class LandingController extends Controller
                     ->get();
 
         return view('pembeli.sukses', compact('pesanan', 'detail'));
+    }
+
+    // 4. 🔥 BARU (HARI 6): Menampilkan Halaman Riwayat Pesanan Pembeli 
+    public function riwayatPesanan()
+    {
+        // Ambil ID Pelanggan yang lagi login
+        $id_pelanggan = Auth::id();
+
+        // Ambil semua data pesanan milik pelanggan ini, diurutkan dari yang paling baru
+        $daftar_pesanan = DB::table('pesanan')
+            ->where('id_pelanggan', $id_pelanggan)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Gabungkan rincian varian & qty dari tabel detail_pesanan untuk tiap baris data
+        foreach ($daftar_pesanan as $pesanan) {
+            $details = DB::table('detail_pesanan')
+                ->where('id_pesanan', $pesanan->id_pesanan)
+                ->get();
+
+            $array_varian = [];
+            foreach ($details as $d) {
+                $nama_ukuran = ($d->id_produk == 1) ? '100g' : '250g';
+                $array_varian[] = $nama_ukuran . " (x" . $d->qty . ")";
+            }
+
+            // Menyimpan teks gabungan (Contoh: "100g (x2), 250g (x1)") ke properti pesanan
+            $pesanan->rincian_varian = count($array_varian) > 0 ? implode(', ', $array_varian) : 'Tidak ada item';
+        }
+
+        return view('pembeli.riwayat', compact('daftar_pesanan'));
     }
 }

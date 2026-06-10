@@ -18,10 +18,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// --- REVISI: RUTE HALAMAN UTAMA PEMBELI (DI SINI TEMPATNYA YANG BENAR!) ---
+// --- RUTE HALAMAN UTAMA PEMBELI ---
 Route::get('/home', function () {
     return view('home');
 })->middleware(['auth'])->name('home');
+
+// --- 🚀 BARU: RUTE ALUR PEMESANAN KOPI (HARI 5) ---
+// 1. Halaman pilih varian ukuran & input Qty
+Route::get('/pesan-kopi', [LandingController::class, 'pilihVarian'])->middleware(['auth'])->name('pembeli.varian');
+
+// 2. Logika memproses data pesanan masuk ke database
+Route::post('/proses-pesanan', [LandingController::class, 'simpanPesanan'])->middleware(['auth'])->name('pembeli.proses_pesanan');
+
+// 3. Halaman konfirmasi sukses setelah beli
+Route::get('/pesanan-sukses/{kode}', [LandingController::class, 'pesananSukses'])->middleware(['auth'])->name('pembeli.sukses');
 
 
 // Fitur Profile bawaan Breeze

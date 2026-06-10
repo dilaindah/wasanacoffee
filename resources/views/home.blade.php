@@ -55,8 +55,8 @@
                     </p>
                     
                     <div class="pt-2">
-                        <a href="#" class="inline-block bg-amber-800 text-white px-8 py-3.5 rounded-xl font-bold text-base hover:bg-amber-900 transition-all transform hover:scale-[1.02] shadow-lg">
-                            Pesan Sekarang <i class="fa-solid fa-cart-shopping ml-2"></i>
+                        <a href="{{ route('pembeli.varian') }}" class="inline-block bg-amber-800 text-white px-8 py-3.5 rounded-xl font-bold text-base hover:bg-amber-900 transition-all transform hover:scale-[1.02] shadow-lg">
+                        Pesan Sekarang <i class="fa-solid fa-cart-shopping ml-2"></i>
                         </a>
                     </div>
                 </div>

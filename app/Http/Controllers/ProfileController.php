@@ -24,17 +24,32 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // 1. Validasi input aman jaya
+        $request->validate([
+            'nama' => ['required', 'string', 'max:255'], 
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:pelanggan,email,' . $user->id_pelanggan . ',id_pelanggan'],
+            'no_hp' => ['nullable', 'string', 'max:15'],
+            'alamat' => ['nullable', 'string'],
+        ]);
 
-        $request->user()->save();
+        // 2. Isi data baru ke objek user
+        $user->fill([
+            'nama' => $request->nama, 
+            'email' => $request->email,
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
+        ]);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // 🔥 FITUR EMAIL_VERIFIED_AT SUDAH ABANG HAPUS BIAR GAK EROR LAGI 🔥
+
+        // 3. Simpan langsung ke database pelanggan adek
+        $user->save();
+
+        return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

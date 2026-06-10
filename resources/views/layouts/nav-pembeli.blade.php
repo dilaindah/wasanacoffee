@@ -12,7 +12,7 @@
                 <a href="{{ route('home') }}" class="hover:text-amber-600 transition {{ Request::is('home') ? 'text-amber-600 font-bold' : '' }}">Home</a>
                 <a href="{{ route('pembeli.riwayat') }}" class="hover:text-amber-600 transition">Riwayat</a>
                 <a href="{{ route('pembeli.cek_status_form') }}" class="hover:text-amber-600 transition">Cek Status</a>
-                <a href="#" class="hover:text-amber-600 transition">Profil</a>
+                <a href="{{ route('profile.edit') }}" class="hover:text-amber-600 transition">Profil</a>
                 <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-amber-600 transition">WhatsApp</a>
                 
                 <form method="POST" action="{{ route('logout') }}" class="inline">

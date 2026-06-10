@@ -152,4 +152,37 @@ class LandingController extends Controller
 
         return view('pembeli.riwayat', compact('daftar_pesanan'));
     }
+    // 5. 🔥 BARU (HARI 6): Menampilkan Halaman Awal Cek Status (Form Kosong)
+    public function halamanCekStatus()
+    {
+        // Kirim data pesanan sebagai null karena pembeli belum mengetik kode apa-apa
+        $pesanan = null;
+        return view('pembeli.cek_status', compact('pesanan'));
+    }
+
+    // 6. 🔥 BARU (HARI 6): Memproses Pencarian Kode Pesanan dari Input Form
+    public function prosesCekStatus(Request $request)
+    {
+        // Validasi wajib diisi
+        $request->validate([
+            'kode_pesanan' => 'required|string',
+        ]);
+
+        $kode = trim($request->kode_pesanan);
+
+        // Cari kode pesanan di database milik pelanggan yang sedang login saja biar aman
+        $id_pelanggan = Auth::id();
+        $pesanan = DB::table('pesanan')
+            ->where('kode_pesanan', $kode)
+            ->where('id_pelanggan', $id_pelanggan)
+            ->first();
+
+        // Jika data tidak ditemukan di DB, kembalikan dengan pesan eror alert
+        if (!$pesanan) {
+            return redirect()->back()->withInput()->with('error_cari', 'Kode pesanan tidak ditemukan atau bukan milik akun Anda. Mohon periksa kembali!');
+        }
+
+        // Jika ketemu, tampilkan kembali halaman yang sama dengan membawa data pesanan tersebut
+        return view('pembeli.cek_status', compact('pesanan'));
+    }
 }

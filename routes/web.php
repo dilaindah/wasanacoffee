@@ -38,6 +38,12 @@ Route::get('/pesanan-sukses/{kode}', [LandingController::class, 'pesananSukses']
 // Tempat pembeli bisa melihat tabel status transaksinya (menunggu, diproses, dikirim, selesai)
 Route::get('/riwayat-pesanan', [LandingController::class, 'riwayatPesanan'])->middleware(['auth'])->name('pembeli.riwayat');
 
+// --- 🚀 BARU: RUTE CEK STATUS TRACKING PESANAN (HARI 6) ---
+// Untuk menampilkan halaman form pencarian awal
+Route::get('/cek-status', [LandingController::class, 'halamanCekStatus'])->middleware(['auth'])->name('pembeli.cek_status_form');
+
+// Untuk memproses pencarian saat tombol "Cek Status" diklik (Memakai POST)
+Route::post('/cek-status', [LandingController::class, 'prosesCekStatus'])->middleware(['auth'])->name('pembeli.cek_status_proses');
 
 // Fitur Profile bawaan Breeze
 Route::middleware('auth')->group(function () {

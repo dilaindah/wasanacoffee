@@ -53,7 +53,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-gray-400 font-medium">TOTAL BELANJA</p>
-                        <p class="font-black text-amber-900 text-sm">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+                        <p class="font-bold text-amber-900 text-sm">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
                     </div>
                 </div>
 
@@ -61,8 +61,8 @@
                     
                     <div class="absolute left-6 right-6 bg-gray-200 h-1 top-1/2 transform -translate-y-1/2 z-0"></div>
                     
-                    <div class="absolute left-6 bg-amber-600 h-1 top-1/2 transform -translate-y-1/2 z-0 transition-all duration-700"
-                        style="width: {{ $pesanan->status_pesanan == 'menunggu' ? '0%' : ($pesanan->status_pesanan == 'diproses' ? '33%' : ($pesanan->status_pesanan == 'dikirim' ? '66%' : '100%')) }};">
+                    <div class="absolute left-6 bg-amber-800 h-1 top-1/2 transform -translate-y-1/2 z-0 transition-all duration-700"
+                        style="width: {{ $pesanan->status_pesanan == 'menunggu' ? '0%' : ($pesanan->status_pesanan == 'diproses' ? '29%' : ($pesanan->status_pesanan == 'dikirim' ? '59%' : '88%')) }};">
                     </div>
 
                     <div class="z-10 text-center flex flex-col items-center">
@@ -70,7 +70,11 @@
                             {{ $pesanan->status_pesanan == 'menunggu' ? 'bg-amber-600 text-white border-amber-200 scale-110 shadow-lg shadow-amber-200' : 'bg-amber-800 text-white border-white' }}">
                             <i class="fa-regular fa-clock text-xs"></i>
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight {{ $pesanan->status_pesanan == 'menunggu' ? 'text-amber-800 font-black' : 'text-gray-400' }}">Menunggu</span>
+                        <span class="text-[11px] font-bold mt-2 tracking-tight 
+                            @if($pesanan->status_pesanan == 'menunggu') text-amber-800 
+                            @else text-gray-700 @endif">
+                            Menunggu
+                        </span>
                     </div>
 
                     <div class="z-10 text-center flex flex-col items-center">
@@ -81,7 +85,7 @@
                             <i class="fa-solid fa-spinner {{ $pesanan->status_pesanan == 'diproses' ? 'fa-spin' : '' }} text-xs"></i>
                         </div>
                         <span class="text-[11px] font-bold mt-2 tracking-tight 
-                            @if($pesanan->status_pesanan == 'diproses') text-blue-700 font-black 
+                            @if($pesanan->status_pesanan == 'diproses') text-blue-700 
                             @elseif($pesanan->status_pesanan == 'dikirim' || $pesanan->status_pesanan == 'selesai') text-gray-700 
                             @else text-gray-400 @endif">Diproses</span>
                     </div>
@@ -94,7 +98,7 @@
                             <i class="fa-solid fa-truck-fast text-xs"></i>
                         </div>
                         <span class="text-[11px] font-bold mt-2 tracking-tight 
-                            @if($pesanan->status_pesanan == 'dikirim') text-purple-700 font-black 
+                            @if($pesanan->status_pesanan == 'dikirim') text-purple-700 
                             @elseif($pesanan->status_pesanan == 'selesai') text-gray-700 
                             @else text-gray-400 @endif">Dikirim</span>
                     </div>
@@ -104,7 +108,7 @@
                             {{ $pesanan->status_pesanan == 'selesai' ? 'bg-green-600 text-white border-green-200 scale-110 shadow-lg shadow-green-200' : 'bg-gray-200 text-gray-400 border-white' }}">
                             <i class="fa-solid fa-circle-check text-xs"></i>
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight {{ $pesanan->status_pesanan == 'selesai' ? 'text-green-700 font-black' : 'text-gray-400' }}">Selesai</span>
+                        <span class="text-[11px] font-bold mt-2 tracking-tight {{ $pesanan->status_pesanan == 'selesai' ? 'text-green-700' : 'text-gray-400' }}">Selesai</span>
                     </div>
 
                 </div>

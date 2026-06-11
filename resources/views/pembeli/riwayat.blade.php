@@ -53,8 +53,16 @@
                                         {{ date('d M Y, H:i', strtotime($pesanan->created_at)) }}
                                     </td>
                                     
-                                    <td class="py-4 px-6 font-mono font-bold text-amber-900 tracking-wide">
-                                        {{ $pesanan->kode_pesanan }}
+                                    <td class="py-4 px-6 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-amber-900 tracking-wide">{{ $pesanan->kode_pesanan }}</span>
+                                            
+                                            <button onclick="salinKodePesanan('{{ $pesanan->kode_pesanan }}', this)" 
+                                                    title="Salin Kode Pesanan"
+                                                    class="inline-flex items-center justify-center w-7 h-7 bg-amber-50 hover:bg-amber-800 text-amber-800 hover:text-white rounded-lg transition-all active:scale-90 border border-amber-200/60 shadow-sm group">
+                                                <i class="fa-regular fa-copy text-xs group-hover:scale-110 transition-transform"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                     
                                     <td class="py-4 px-6 text-amber-950">
@@ -93,6 +101,30 @@
         @endif
 
     </div>
+
+    <script>
+        function salinKodePesanan(kode, elemenTombol) {
+            // Jalankan fungsi salin teks bawaan browser modern
+            navigator.clipboard.writeText(kode).then(() => {
+                // Simpan ikon asli lama (fa-copy)
+                const ikonLama = elemenTombol.innerHTML;
+                
+                // Ubah tampilan tombol jadi hijau tanda sukses disalin
+                elemenTombol.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+                elemenTombol.classList.remove('bg-amber-50', 'text-amber-800', 'border-amber-200/60');
+                elemenTombol.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600');
+                
+                // Kembalikan ke ikon semula setelah 1.5 detik
+                setTimeout(() => {
+                    elemenTombol.innerHTML = ikonLama;
+                    elemenTombol.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600');
+                    elemenTombol.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200/60');
+                }, 1500);
+            }).catch(err => {
+                alert('Gagal menyalin kode, coba blok manual ya dek.');
+            });
+        }
+    </script>
 
 </body>
 </html>

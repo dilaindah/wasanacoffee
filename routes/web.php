@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\LandingController; 
+use App\Http\Controllers\AdminPesananController; // SINKRONKAN CONTROLLER BARU
 use Illuminate\Support\Facades\Route;
 
 // ========================================================
@@ -24,25 +25,15 @@ Route::get('/home', function () {
 })->middleware(['auth'])->name('home');
 
 // --- 🚀 ALUR PEMESANAN KOPI (HARI 5) ---
-// 1. Halaman pilih varian ukuran & input Qty
 Route::get('/pesan-kopi', [LandingController::class, 'pilihVarian'])->middleware(['auth'])->name('pembeli.varian');
-
-// 2. Logika memproses data pesanan masuk ke database
 Route::post('/proses-pesanan', [LandingController::class, 'simpanPesanan'])->middleware(['auth'])->name('pembeli.proses_pesanan');
-
-// 3. Halaman konfirmasi sukses setelah beli
 Route::get('/pesanan-sukses/{kode}', [LandingController::class, 'pesananSukses'])->middleware(['auth'])->name('pembeli.sukses');
 
-
 // --- 🚀 BARU: RUTE RIWAYAT PESANAN PEMBELI (HARI 6) ---
-// Tempat pembeli bisa melihat tabel status transaksinya (menunggu, diproses, dikirim, selesai)
 Route::get('/riwayat-pesanan', [LandingController::class, 'riwayatPesanan'])->middleware(['auth'])->name('pembeli.riwayat');
 
 // --- 🚀 BARU: RUTE CEK STATUS TRACKING PESANAN (HARI 6) ---
-// Untuk menampilkan halaman form pencarian awal
 Route::get('/cek-status', [LandingController::class, 'halamanCekStatus'])->middleware(['auth'])->name('pembeli.cek_status_form');
-
-// Untuk memproses pencarian saat tombol "Cek Status" diklik (Memakai POST)
 Route::post('/cek-status', [LandingController::class, 'prosesCekStatus'])->middleware(['auth'])->name('pembeli.cek_status_proses');
 
 // Fitur Profile bawaan Breeze
@@ -80,7 +71,12 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::put('/produk/edit/{id}', [ProdukController::class, 'update'])->name('admin.produk.update');
     Route::delete('/produk/hapus/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
     
-    // Menu hiasan sementara biar sidebar gak eror pas diklik
-    Route::get('/pesanan', function() { return view('admin.dashboard'); })->name('admin.pesanan.index');
+    // Menu hiasan sementara
     Route::get('/laporan', function() { return view('admin.dashboard'); })->name('admin.laporan.index');
+
+    // --- 🚀 UTAMA HARI 7: RUTE KELOLA PESANAN (ADMIN) ---
+    // (Prefix /admin sudah otomatis aktif di sini karena masuk grup)
+    Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('admin.pesanan.index');
+    Route::get('/pesanan/{id}', [AdminPesananController::class, 'detail'])->name('admin.pesanan.detail');
+    Route::post('/pesanan/{id}/update', [AdminPesananController::class, 'updateStatus'])->name('admin.pesanan.update');
 });

@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\LandingController; 
-use App\Http\Controllers\AdminPesananController; // SINKRONKAN CONTROLLER BARU
+use App\Http\Controllers\AdminPesananController; 
+use App\Http\Controllers\AdminLaporanController; // 🚀 TAMBAHAN: SINKRONKAN CONTROLLER LAPORAN
 use Illuminate\Support\Facades\Route;
 
 // ========================================================
@@ -71,11 +72,11 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::put('/produk/edit/{id}', [ProdukController::class, 'update'])->name('admin.produk.update');
     Route::delete('/produk/hapus/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
     
-    // Menu hiasan sementara
-    Route::get('/laporan', function() { return view('admin.dashboard'); })->name('admin.laporan.index');
+    // --- 🚀 UTAMA HARI 8: RUTE LAPORAN KEMUANGAN & CETAK PDF ---
+    Route::get('/laporan', [AdminLaporanController::class, 'index'])->name('admin.laporan.index');
+    Route::get('/laporan/cetak-pdf/{bulan}/{tahun}', [AdminLaporanController::class, 'cetakPdf'])->name('admin.laporan.pdf');
 
     // --- 🚀 UTAMA HARI 7: RUTE KELOLA PESANAN (ADMIN) ---
-    // (Prefix /admin sudah otomatis aktif di sini karena masuk grup)
     Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('admin.pesanan.index');
     Route::get('/pesanan/{id}', [AdminPesananController::class, 'detail'])->name('admin.pesanan.detail');
     Route::post('/pesanan/{id}/update', [AdminPesananController::class, 'updateStatus'])->name('admin.pesanan.update');

@@ -5,7 +5,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\LandingController; 
 use App\Http\Controllers\AdminPesananController; 
-use App\Http\Controllers\AdminLaporanController; // 🚀 TAMBAHAN: SINKRONKAN CONTROLLER LAPORAN
+use App\Http\Controllers\AdminLaporanController; // 🚀 SINKRONKAN CONTROLLER LAPORAN & DASHBOARD
 use Illuminate\Support\Facades\Route;
 
 // ========================================================
@@ -59,10 +59,8 @@ Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admi
 // --- ALAMAT DASHBOARD & CRUD ADMIN (Di dalam pengaman middleware) ---
 Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     
-    // Halaman Utama / Dashboard Overview Admin
-    Route::get('/dashboard', function() {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    // --- 🚀 PERBAIKAN HARI 9: Dashboard Overview Sekarang Dinamis ---
+    Route::get('/dashboard', [AdminLaporanController::class, 'dashboardOverview'])->name('admin.dashboard');
 
     // Fitur Kelola Produk Admin (CRUD)
     Route::get('/produk', [ProdukController::class, 'index'])->name('admin.produk.index');
@@ -72,7 +70,7 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::put('/produk/edit/{id}', [ProdukController::class, 'update'])->name('admin.produk.update');
     Route::delete('/produk/hapus/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
     
-    // --- 🚀 UTAMA HARI 8: RUTE LAPORAN KEMUANGAN & CETAK PDF ---
+    // --- 🚀 UTAMA HARI 8: RUTE LAPORAN KEUANGAN & CETAK PDF ---
     Route::get('/laporan', [AdminLaporanController::class, 'index'])->name('admin.laporan.index');
     Route::get('/laporan/cetak-pdf/{bulan}/{tahun}', [AdminLaporanController::class, 'cetakPdf'])->name('admin.laporan.pdf');
 

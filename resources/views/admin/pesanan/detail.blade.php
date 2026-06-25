@@ -75,9 +75,9 @@
                                 </tr>
                             @endforeach
                             
-                                <tr class="bg-amber-900/5 font-bold text-amber-950 border-t border-amber-100">
+                            <tr class="bg-amber-900/5 font-bold text-amber-950 border-t border-amber-100">
                                 <td colspan="3" class="p-4 text-right font-bold text-xs uppercase tracking-wider text-amber-950">
-                                Total Final Pembayaran :
+                                    Total Final Pembayaran :
                                 </td>
                                 <td class="p-4 text-right pr-6 text-base text-amber-900 font-bold">
                                     Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}
@@ -90,38 +90,42 @@
         </div>
 
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 h-fit">
-    <h3 class="text-sm font-bold uppercase text-amber-900 tracking-wider mb-4 border-b border-amber-50 pb-2">
-        ⚙️ Panel Kontrol Aksi
-    </h3>
-    
-    <div class="mb-5 text-xs">
-        <p class="text-gray-500 font-semibold uppercase tracking-wider">Status Saat Ini:</p>
-        <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight
-            @if($pesanan->status_pesanan == 'menunggu') bg-amber-50 text-amber-800 border border-amber-200/50
-            @elseif($pesanan->status_pesanan == 'diproses') bg-blue-50 text-blue-700 border border-blue-200/50
-            @elseif($pesanan->status_pesanan == 'dikirim') bg-purple-50 text-purple-700 border border-purple-200/50
-            @else bg-emerald-50 text-emerald-700 border border-emerald-200/50 @endif">
-            {{ $pesanan->status_pesanan }}
-        </span>
-    </div>
+            <h3 class="text-sm font-bold uppercase text-amber-900 tracking-wider mb-4 border-b border-amber-50 pb-2">
+                ⚙️ Panel Kontrol Aksi
+            </h3>
+            
+            <div class="mb-5 text-xs">
+                <p class="text-gray-500 font-semibold uppercase tracking-wider">Status Saat Ini:</p>
+                {{-- REVISI: Penambahan logika warna badge untuk status 'dibatalkan' --}}
+                <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight
+                    @if($pesanan->status_pesanan == 'menunggu') bg-amber-50 text-amber-800 border border-amber-200/50
+                    @elseif($pesanan->status_pesanan == 'diproses') bg-blue-50 text-blue-700 border border-blue-200/50
+                    @elseif($pesanan->status_pesanan == 'dikirim') bg-purple-50 text-purple-700 border border-purple-200/50
+                    @elseif($pesanan->status_pesanan == 'dibatalkan') bg-red-50 text-red-700 border border-red-200/50
+                    @else bg-emerald-50 text-emerald-700 border border-emerald-200/50 @endif">
+                    {{ $pesanan->status_pesanan }}
+                </span>
+            </div>
 
-    <form method="POST" action="{{ route('admin.pesanan.update', $pesanan->id_pesanan) }}">
-        @csrf
-        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-            Ubah Status Ke:
-        </label>
-        
-        <select name="status_pesanan" class="w-full bg-amber-50/50 border border-amber-200/60 rounded-xl px-3 py-2.5 text-sm font-semibold text-amber-950 focus:outline-none focus:border-amber-800 shadow-sm transition mb-5">
-            <option value="menunggu" {{ $pesanan->status_pesanan == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
-            <option value="diproses" {{ $pesanan->status_pesanan == 'diproses' ? 'selected' : '' }}>Diproses</option>
-            <option value="dikirim" {{ $pesanan->status_pesanan == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
-            <option value="selesai" {{ $pesanan->status_pesanan == 'selesai' ? 'selected' : '' }}>Selesai</option>
-        </select>
+            <form method="POST" action="{{ route('admin.pesanan.update', $pesanan->id_pesanan) }}">
+                @csrf
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                    Ubah Status Ke:
+                </label>
+                
+                <select name="status_pesanan" class="w-full bg-amber-50/50 border border-amber-200/60 rounded-xl px-3 py-2.5 text-sm font-semibold text-amber-950 focus:outline-none focus:border-amber-800 shadow-sm transition mb-5">
+                    <option value="menunggu" {{ $pesanan->status_pesanan == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                    <option value="diproses" {{ $pesanan->status_pesanan == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                    <option value="dikirim" {{ $pesanan->status_pesanan == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
+                    <option value="selesai" {{ $pesanan->status_pesanan == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    {{-- REVISI: Penambahan opsi pilihan 'dibatalkan' di dalam dropdown select --}}
+                    <option value="dibatalkan" {{ $pesanan->status_pesanan == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                </select>
 
-        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white font-semibold py-2.5 rounded-xl text-xs uppercase tracking-wider transition transform active:scale-95 shadow-sm flex items-center justify-center gap-1.5">
-            💾 Simpan Perubahan Status
-        </button>
-    </form>
-</div>
+                <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white font-semibold py-2.5 rounded-xl text-xs uppercase tracking-wider transition transform active:scale-95 shadow-sm flex items-center justify-center gap-1.5">
+                    💾 Simpan Perubahan Status
+                </button>
+            </form>
+        </div>
     </div>
 @endsection

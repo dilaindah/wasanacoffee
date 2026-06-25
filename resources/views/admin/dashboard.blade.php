@@ -13,25 +13,55 @@
         </div>
     </header>
 
+    <!-- REVISI UTAMA: Perbaikan Gradasi Warna Card Pertama (Total Produk) Agar Senada & Keluar Cokelat Espresso -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white p-6 rounded-[24px] shadow-xl border border-amber-100 flex flex-col justify-between hover:scale-[1.02] transition duration-300">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Produk</span>
-            <span class="text-3xl font-black text-amber-950 mt-2">{{ $total_produk }} Varian</span>
+        
+        <!-- CARD 1: TOTAL PRODUK (Cokelat Espresso Pekat - FIXED) -->
+        <div class="bg-gradient-to-br from-amber-900 to-amber-950 p-6 rounded-[24px] shadow-xl text-white flex flex-col justify-between hover:scale-[1.03] transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl transition-all group-hover:scale-110 duration-300">
+                <i class="fa-solid fa-mug-hot"></i>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-amber-200/80 uppercase tracking-wider block mb-1">Total Produk</span>
+                <span class="text-3xl font-black tracking-tight text-amber-50">{{ $total_produk }} Varian</span>
+            </div>
+            <span class="text-[11px] text-amber-300/60 mt-4 block">Varian menu kopi aktif</span>
         </div>
         
-        <div class="bg-white p-6 rounded-[24px] shadow-xl border border-amber-100 flex flex-col justify-between hover:scale-[1.02] transition duration-300">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Pesanan</span>
-            <span class="text-3xl font-black text-amber-950 mt-2">{{ $total_pesanan }} Transaksi</span>
+        <!-- CARD 2: TOTAL PESANAN (Medium Roast Coffee) -->
+        <div class="bg-gradient-to-br from-amber-700 to-amber-900 p-6 rounded-[24px] shadow-xl text-white flex flex-col justify-between hover:scale-[1.03] transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl transition-all group-hover:scale-110 duration-300">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-amber-200/80 uppercase tracking-wider block mb-1">Total Pesanan</span>
+                <span class="text-3xl font-black tracking-tight text-amber-50">{{ $total_pesanan }} Transaksi</span>
+            </div>
+            <span class="text-[11px] text-amber-200/60 mt-4 block">Seluruh order terkumpul</span>
         </div>
         
-        <div class="bg-white p-6 rounded-[24px] shadow-xl border border-amber-100 flex flex-col justify-between hover:scale-[1.02] transition duration-300">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pesanan Hari Ini</span>
-            <span class="text-3xl font-bold text-emerald-700 mt-2">{{ $pesanan_hari_ini }} Pesanan</span>
+        <!-- CARD 3: PESANAN HARI INI (Creamy Caramel Latte) -->
+        <div class="bg-gradient-to-br from-amber-500 to-amber-700 p-6 rounded-[24px] shadow-xl text-white flex flex-col justify-between hover:scale-[1.03] transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl transition-all group-hover:scale-110 duration-300">
+                <i class="fa-solid fa-truck-ramp-box"></i>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-amber-100 uppercase tracking-wider block mb-1">Pesanan Hari Ini</span>
+                <span class="text-3xl font-black tracking-tight text-white">{{ $pesanan_hari_ini }} Pesanan</span>
+            </div>
+            <span class="text-[11px] text-amber-100/60 mt-4 block">Perlu diproses segera</span>
         </div>
         
-        <div class="bg-white p-6 rounded-[24px] shadow-xl border border-amber-100 flex flex-col justify-between hover:scale-[1.02] transition duration-300">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Pendapatan</span>
-            <span class="text-2xl font-black text-emerald-700 mt-2">Rp {{ number_format($total_pendapatan, 0, ',', '.') }}</span>
+        <!-- CARD 4: TOTAL PENDAPATAN (Warm Golden Amber) -->
+        <div class="bg-gradient-to-br from-amber-600 to-amber-800 p-6 rounded-[24px] shadow-xl text-white flex flex-col justify-between hover:scale-[1.03] transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute -right-4 -bottom-4 text-white/10 text-7xl transition-all group-hover:scale-110 duration-300">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-amber-200/80 uppercase tracking-wider block mb-1">Total Pendapatan</span>
+                <span class="text-2xl font-black tracking-tight text-amber-50">Rp {{ number_format($total_pendapatan, 0, ',', '.') }}</span>
+            </div>
+            <span class="text-[11px] text-amber-200/60 mt-4 block">Omzet bersih terverifikasi</span>
         </div>
     </div>
 
@@ -50,24 +80,23 @@
         document.addEventListener("DOMContentLoaded", function() {
             const ctx = document.getElementById('trenPesananChart').getContext('2d');
             
-            // Mengambil data dari Laravel Controller ke Javascript
             const labelsGrafik = @json($data_grafik['labels']);
             const dataGrafik = @json($data_grafik['data']);
 
             new Chart(ctx, {
-                type: 'line', // Jenis grafik garis elegan
+                type: 'line', 
                 data: {
                     labels: labelsGrafik,
                     datasets: [{
                         label: ' Jumlah Pesanan Masuk',
                         data: dataGrafik,
-                        borderColor: '#78350f', // Warna cokelat tema Wasana Coffee
-                        backgroundColor: 'rgba(245, 158, 11, 0.1)', // Transparansi amber
+                        borderColor: '#78350f', 
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)', 
                         borderWidth: 3,
                         pointBackgroundColor: '#b45309',
                         pointRadius: 5,
                         pointHoverRadius: 7,
-                        tension: 0.3 // Membuat garisnya melengkung halus (smooth)
+                        tension: 0.3 
                     }]
                 },
                 options: {
@@ -75,14 +104,14 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            display: false // Sembunyikan kotak label atas agar rapi
+                            display: false 
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                stepSize: 1, // Angkanya naik per 1 pesanan (bulat)
+                                stepSize: 1, 
                                 font: { weight: 'bold' }
                             },
                             grid: { color: '#f3f4f6' }

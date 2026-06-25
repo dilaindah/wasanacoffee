@@ -28,7 +28,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('pembeli.proses_pesanan') }}" class="space-y-6">
+        <form method="POST" action="{{ route('pembeli.proses_pesanan') }}" onsubmit="return validasiSebelumKirim()" class="space-y-6">
             @csrf
 
             <div class="bg-white rounded-3xl p-6 shadow-xl border border-amber-100 flex items-center justify-between transition hover:border-amber-400 {{ $produk_100g->stok == 0 ? 'opacity-60 bg-gray-50' : '' }}">
@@ -46,8 +46,11 @@
                     
                     <div class="flex items-center justify-end">
                         <button type="button" onclick="kurangQty('100g')" class="w-8 h-8 rounded-l-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold transition flex items-center justify-center" {{ $produk_100g->stok == 0 ? 'disabled' : '' }}>-</button>
+                        
+                        {{-- REVISI UTAMA: Mengubah disabled menjadi readonly jika stok habis agar nilainya tetap terkirim ke Laravel --}}
                         <input type="number" id="qty_100g" name="qty_100g" value="0" min="0" max="{{ $produk_100g->stok }}" oninput="hitungTotal()"
-                            class="w-14 h-8 text-center border-y border-amber-100 text-sm font-bold bg-white focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" {{ $produk_100g->stok == 0 ? 'disabled' : '' }}>
+                            class="w-14 h-8 text-center border-y border-amber-100 text-sm font-bold bg-white focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" {{ $produk_100g->stok == 0 ? 'readonly' : '' }}>
+                        
                         <button type="button" onclick="tambahQty('100g')" class="w-8 h-8 rounded-r-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold transition flex items-center justify-center" {{ $produk_100g->stok == 0 ? 'disabled' : '' }}>+</button>
                     </div>
                 </div>
@@ -68,8 +71,11 @@
                     
                     <div class="flex items-center justify-end">
                         <button type="button" onclick="kurangQty('250g')" class="w-8 h-8 rounded-l-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold transition flex items-center justify-center" {{ $produk_250g->stok == 0 ? 'disabled' : '' }}>-</button>
+                        
+                        {{-- REVISI UTAMA: Mengubah disabled menjadi readonly jika stok habis agar nilainya tetap terkirim ke Laravel --}}
                         <input type="number" id="qty_250g" name="qty_250g" value="0" min="0" max="{{ $produk_250g->stok }}" oninput="hitungTotal()"
-                            class="w-14 h-8 text-center border-y border-amber-100 text-sm font-bold bg-white focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" {{ $produk_250g->stok == 0 ? 'disabled' : '' }}>
+                            class="w-14 h-8 text-center border-y border-amber-100 text-sm font-bold bg-white focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" {{ $produk_250g->stok == 0 ? 'readonly' : '' }}>
+                        
                         <button type="button" onclick="tambahQty('250g')" class="w-8 h-8 rounded-r-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold transition flex items-center justify-center" {{ $produk_250g->stok == 0 ? 'disabled' : '' }}>+</button>
                     </div>
                 </div>
@@ -130,6 +136,17 @@
 
             let grandTotal = (qty100g * harga100g) + (qty250g * harga250g);
             document.getElementById('display_total').innerText = 'Rp ' + grandTotal.toLocaleString('id-ID');
+        }
+
+        function validasiSebelumKirim() {
+            let qty100g = parseInt(document.getElementById('qty_100g').value) || 0;
+            let qty250g = parseInt(document.getElementById('qty_250g').value) || 0;
+
+            if (qty100g === 0 && qty250g === 0) {
+                alert("Mohon tentukan jumlah (kuantitas) kopi Wasana yang ingin dibeli terlebih dahulu ya dek!");
+                return false; 
+            }
+            return true; 
         }
     </script>
 

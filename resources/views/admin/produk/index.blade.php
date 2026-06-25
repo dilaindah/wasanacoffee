@@ -21,7 +21,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
-                <tr class="bg-amber-900/5 text-amber-900 text-sm font-semibold uppercase tracking-wider border-b border-amber-100">
+                <tr class="bg-amber-800 text-white text-sm font-semibold uppercase tracking-wider border-b border-amber-800">
                     <th class="p-4 pl-6">No</th>
                     <th class="p-4">Ukuran Varian</th>
                     <th class="p-4">Harga</th>

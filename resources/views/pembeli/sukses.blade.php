@@ -24,7 +24,12 @@
             <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100 space-y-3.5">
                 <div class="flex justify-between items-center text-xs pb-2 border-b border-amber-100/60">
                     <span class="text-gray-500 font-medium">KODE PESANAN:</span>
-                    <span class="font-mono font-bold text-amber-900 tracking-wider bg-amber-100/50 px-2 py-0.5 rounded">{{ $pesanan->kode_pesanan }}</span>
+                    <div class="flex items-center gap-1.5">
+                        <span id="kode_pesanan" class="font-mono font-bold text-amber-900 tracking-wider bg-amber-100/50 px-2 py-0.5 rounded">{{ $pesanan->kode_pesanan }}</span>
+                        <button onclick="salinTeks('kode_pesanan', this)" class="text-amber-700 hover:text-amber-950 transition p-1" title="Salin Kode Pesanan">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="flex flex-col gap-2 text-xs">
@@ -50,12 +55,14 @@
                     </h4>
                     <div class="space-y-2 text-xs md:text-sm text-gray-700">
                         <p><strong>Bank:</strong> Bank Central Asia (BCA)</p>
-                        <p><strong>No. Rek:</strong> <span class="bg-amber-100 px-2 py-0.5 rounded font-mono font-bold text-amber-950 tracking-wide">123-4567-890</span></p>
+                        <div class="flex items-center justify-between">
+                            <p><strong>No. Rek:</strong> <span id="no_rek" class="bg-amber-100 px-2 py-0.5 rounded font-mono font-bold text-amber-950 tracking-wide">123-4567-890</span></p>
+                            <button onclick="salinTeks('no_rek', this)" class="text-amber-700 hover:text-amber-950 transition mr-1" title="Salin No Rekening">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                        </div>
                         <p><strong>A.N:</strong> Wasana Coffee Management</p>
                     </div>
-                    <p class="text-[11px] text-gray-500 italic mt-3 leading-relaxed border-t border-gray-100 pt-2">
-                        *Mohon sertakan Kode Pesanan di berita transfer Anda, lalu kirim bukti transfer ke WhatsApp admin.
-                    </p>
                 </div>
 
                 <div>
@@ -67,7 +74,40 @@
 
         </div>
 
+        <div class="mt-8 bg-orange-50 border-2 border-orange-200 rounded-2xl p-4 flex items-start gap-3 shadow-sm">
+            <div class="text-orange-600 text-lg mt-0.5 animate-bounce">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="text-xs md:text-sm text-amber-950 leading-relaxed">
+                <strong class="text-orange-700 font-black block uppercase tracking-wide mb-1 text-xs"><i class="fa-solid fa-circle-exclamation"></i> PENTING SEBELUM TRANSFER:</strong>
+                Mohon wajib menyertakan <span class="bg-orange-200 text-orange-950 px-1.5 py-0.5 rounded font-black font-mono">KODE PESANAN</span> di dalam <strong>kolom berita/catatan transfer</strong> Anda.
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        function salinTeks(idElemen, tombol) {
+            // Ambil text dari elemen berdasarkan ID
+            let teks = document.getElementById(idElemen).innerText;
+
+            // Logika menyalin data teks ke clipboard internal sistem device
+            navigator.clipboard.writeText(teks).then(() => {
+                // Mengubah ikon menjadi tanda centang hijau tanda berhasil
+                let ikonAsli = tombol.innerHTML;
+                tombol.innerHTML = '<i class="fa-solid fa-check text-green-600 animate-scale"></i>';
+                tombol.disabled = true;
+
+                // Kembalikan ikon semula setelah 2 detik biar bisa dicopy ulang kalau mau
+                setTimeout(() => {
+                    tombol.innerHTML = ikonAsli;
+                    tombol.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        }
+    </script>
 
 </body>
 </html>

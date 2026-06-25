@@ -20,7 +20,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-amber-900/5 text-amber-900 text-sm font-semibold uppercase tracking-wider border-b border-amber-100">
+                    <tr class="bg-amber-800 text-white text-sm font-semibold uppercase tracking-wider border-b border-amber-800">
                         <th class="p-4 pl-6">Tanggal Masuk</th>
                         <th class="p-4">Kode Pesanan</th>
                         <th class="p-4">Nama Pelanggan</th>
@@ -45,10 +45,12 @@
                                 Rp {{ number_format($p->total_harga, 0, ',', '.') }}
                             </td>
                             <td class="p-4 text-center">
+                                {{-- REVISI: Penambahan logika warna merah jika status pesanan dibatalkan --}}
                                 <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tight
                                     @if($p->status_pesanan == 'menunggu') bg-amber-50 text-amber-800 border border-amber-200/50
                                     @elseif($p->status_pesanan == 'diproses') bg-blue-50 text-blue-700 border border-blue-200/50
                                     @elseif($p->status_pesanan == 'dikirim') bg-purple-50 text-purple-700 border border-purple-200/50
+                                    @elseif($p->status_pesanan == 'dibatalkan') bg-red-50 text-red-700 border border-red-200/50
                                     @else bg-emerald-50 text-emerald-700 border border-emerald-200/50 @endif">
                                     {{ $p->status_pesanan }}
                                 </span>

@@ -13,7 +13,7 @@
 
     <section class="relative h-screen flex items-center justify-end overflow-hidden -mt-20">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070" class="w-full h-full object-cover brightness-[0.4]" alt="Hero Pembeli">
+             <img src="{{ asset('images/home-pembeli.jpeg') }}" class="w-full h-full object-cover brightness-[0.4]" alt="Hero Pembeli">
         </div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-right text-white w-full">
@@ -27,7 +27,7 @@
                 </span>
             </h1>
             <p class="text-sm md:text-lg font-light max-w-md ml-auto drop-shadow-md text-amber-100/90 italic border-r-4 border-amber-500 pr-4">
-                "Siap menikmati seduhan kopi terbaik hari ini? Silakan jelajahi menu eksklusif Anda di bawah."
+                "Siap mencicipi vibes Kintamani dalam tiap seduhan? Silakan jelajahi menu eksklusif Anda di bawah."
             </p>
             
             <div class="mt-12 text-amber-400/60 animate-bounce text-xs font-mono tracking-widest hidden md:block">

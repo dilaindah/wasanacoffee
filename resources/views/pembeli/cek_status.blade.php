@@ -13,6 +13,13 @@
 
     <div class="max-w-3xl mx-auto px-4 py-10">
         
+        {{-- REVISI UTAMA: Penempatan tombol kembali ke dashboard adek --}}
+        <div class="mb-6">
+            <a href="{{ route('home') }}" class="text-amber-800 text-sm font-bold hover:underline inline-flex items-center">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Dashboard
+            </a>
+        </div>
+
         <div class="text-center mb-8">
             <h2 class="text-3xl font-black text-amber-950 tracking-tight">Cek Status Pesanan</h2>
             <p class="text-gray-500 text-sm mt-1">Lacak posisi dan status pembuatan kopi Wasana adek secara real-time.</p>
@@ -57,65 +64,79 @@
                     </div>
                 </div>
 
-                <div class="relative flex items-center justify-between mb-12 px-4">
-                    
-                    <div class="absolute left-6 right-6 bg-gray-200 h-1 top-1/2 transform -translate-y-1/2 z-0"></div>
-                    
-                    <div class="absolute left-6 bg-amber-800 h-1 top-1/2 transform -translate-y-1/2 z-0 transition-all duration-700"
-                        style="width: {{ $pesanan->status_pesanan == 'menunggu' ? '0%' : ($pesanan->status_pesanan == 'diproses' ? '29%' : ($pesanan->status_pesanan == 'dikirim' ? '59%' : '88%')) }};">
-                    </div>
-
-                    <div class="z-10 text-center flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
-                            {{ $pesanan->status_pesanan == 'menunggu' ? 'bg-amber-600 text-white border-amber-200 scale-110 shadow-lg shadow-amber-200' : 'bg-amber-800 text-white border-white' }}">
-                            <i class="fa-regular fa-clock text-xs"></i>
+                @if($pesanan->status_pesanan != 'dibatalkan')
+                    <div class="relative flex items-center justify-between mb-12 px-4">
+                        
+                        <div class="absolute left-6 right-6 bg-gray-200 h-1 top-1/2 transform -translate-y-1/2 z-0"></div>
+                        
+                        <div class="absolute left-6 bg-amber-800 h-1 top-1/2 transform -translate-y-1/2 z-0 transition-all duration-700"
+                            style="width: {{ $pesanan->status_pesanan == 'menunggu' ? '0%' : ($pesanan->status_pesanan == 'diproses' ? '29%' : ($pesanan->status_pesanan == 'dikirim' ? '59%' : '88%')) }};">
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight 
-                            @if($pesanan->status_pesanan == 'menunggu') text-amber-800 
-                            @else text-gray-700 @endif">
-                            Menunggu
-                        </span>
-                    </div>
 
-                    <div class="z-10 text-center flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
-                            @if($pesanan->status_pesanan == 'diproses') bg-blue-600 text-white border-blue-200 scale-110 shadow-lg shadow-blue-200
-                            @elseif($pesanan->status_pesanan == 'dikirim' || $pesanan->status_pesanan == 'selesai') bg-blue-800 text-white border-white
-                            @else bg-gray-200 text-gray-400 border-white @endif">
-                            <i class="fa-solid fa-spinner {{ $pesanan->status_pesanan == 'diproses' ? 'fa-spin' : '' }} text-xs"></i>
+                        <div class="z-10 text-center flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
+                                {{ $pesanan->status_pesanan == 'menunggu' ? 'bg-amber-600 text-white border-amber-200 scale-110 shadow-lg shadow-amber-200' : 'bg-amber-800 text-white border-white' }}">
+                                <i class="fa-regular fa-clock text-xs"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-2 tracking-tight 
+                                @if($pesanan->status_pesanan == 'menunggu') text-amber-800 
+                                @else text-gray-700 @endif">
+                                Menunggu
+                            </span>
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight 
-                            @if($pesanan->status_pesanan == 'diproses') text-blue-700 
-                            @elseif($pesanan->status_pesanan == 'dikirim' || $pesanan->status_pesanan == 'selesai') text-gray-700 
-                            @else text-gray-400 @endif">Diproses</span>
-                    </div>
 
-                    <div class="z-10 text-center flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
-                            @if($pesanan->status_pesanan == 'dikirim') bg-purple-600 text-white border-purple-200 scale-110 shadow-lg shadow-purple-200
-                            @elseif($pesanan->status_pesanan == 'selesai') bg-purple-800 text-white border-white
-                            @else bg-gray-200 text-gray-400 border-white @endif">
-                            <i class="fa-solid fa-truck-fast text-xs"></i>
+                        <div class="z-10 text-center flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
+                                @if($pesanan->status_pesanan == 'diproses') bg-blue-600 text-white border-blue-200 scale-110 shadow-lg shadow-blue-200
+                                @elseif($pesanan->status_pesanan == 'dikirim' || $pesanan->status_pesanan == 'selesai') bg-blue-800 text-white border-white
+                                @else bg-gray-200 text-gray-400 border-white @endif">
+                                <i class="fa-solid fa-spinner {{ $pesanan->status_pesanan == 'diproses' ? 'fa-spin' : '' }} text-xs"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-2 tracking-tight 
+                                @if($pesanan->status_pesanan == 'diproses') text-blue-700 
+                                @elseif($pesanan->status_pesanan == 'dikirim' || $pesanan->status_pesanan == 'selesai') text-gray-700 
+                                @else text-gray-400 @endif">Diproses</span>
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight 
-                            @if($pesanan->status_pesanan == 'dikirim') text-purple-700 
-                            @elseif($pesanan->status_pesanan == 'selesai') text-gray-700 
-                            @else text-gray-400 @endif">Dikirim</span>
-                    </div>
 
-                    <div class="z-10 text-center flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
-                            {{ $pesanan->status_pesanan == 'selesai' ? 'bg-green-600 text-white border-green-200 scale-110 shadow-lg shadow-green-200' : 'bg-gray-200 text-gray-400 border-white' }}">
-                            <i class="fa-solid fa-circle-check text-xs"></i>
+                        <div class="z-10 text-center flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
+                                @if($pesanan->status_pesanan == 'dikirim') bg-purple-600 text-white border-purple-200 scale-110 shadow-lg shadow-purple-200
+                                @elseif($pesanan->status_pesanan == 'selesai') bg-purple-800 text-white border-white
+                                @else bg-gray-200 text-gray-400 border-white @endif">
+                                <i class="fa-solid fa-truck-fast text-xs"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-2 tracking-tight 
+                                @if($pesanan->status_pesanan == 'dikirim') text-purple-700 
+                                @elseif($pesanan->status_pesanan == 'selesai') text-gray-700 
+                                @else text-gray-400 @endif">Dikirim</span>
                         </div>
-                        <span class="text-[11px] font-bold mt-2 tracking-tight {{ $pesanan->status_pesanan == 'selesai' ? 'text-green-700' : 'text-gray-400' }}">Selesai</span>
-                    </div>
 
-                </div>
+                        <div class="z-10 text-center flex flex-col items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-4 transition-all duration-300
+                                {{ $pesanan->status_pesanan == 'selesai' ? 'bg-green-600 text-white border-green-200 scale-110 shadow-lg shadow-green-200' : 'bg-gray-200 text-gray-400 border-white' }}">
+                                <i class="fa-solid fa-circle-check text-xs"></i>
+                            </div>
+                            <span class="text-[11px] font-bold mt-2 tracking-tight {{ $pesanan->status_pesanan == 'selesai' ? 'text-green-700' : 'text-gray-400' }}">Selesai</span>
+                        </div>
+
+                    </div>
+                @else
+                    <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center mb-10 flex flex-col items-center justify-center gap-3">
+                        <div class="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl shadow-sm">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-black text-red-900 uppercase tracking-wide">Pesanan Ini Dibatalkan</h4>
+                            <p class="text-xs text-red-700/80 mt-1 max-w-md mx-auto leading-relaxed">
+                                Maaf, pesanan kopi Wasana dengan kode di atas telah dibatalkan oleh pihak pengelola atau sistem. Silakan lakukan pemesanan ulang atau hubungi admin.
+                            </p>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="bg-amber-50/60 rounded-xl p-4 border border-amber-100 flex items-center gap-3 text-left">
                     <div class="text-amber-800 text-base">
-                        <i class="fa-solid fa-circle-info animate-pulse"></i>
+                        <i class="fa-solid fa-circle-info {{ $pesanan->status_pesanan != 'dibatalkan' ? 'animate-pulse' : '' }}"></i>
                     </div>
                     <p class="text-xs text-amber-950 font-semibold leading-relaxed">
                         Status Pesanan diperbarui secara berkala oleh admin. Mohon cek halaman ini secara berkala untuk memantau status pesanan kopi Anda.

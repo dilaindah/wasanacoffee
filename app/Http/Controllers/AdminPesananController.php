@@ -47,7 +47,8 @@ class AdminPesananController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status_pesanan' => 'required|in:menunggu,diproses,dikirim,selesai'
+            // REVISI: Sudah ditambahkan 'dibatalkan' di paling ujung validasi
+            'status_pesanan' => 'required|in:menunggu,diproses,dikirim,selesai,dibatalkan'
         ]);
 
         $status_baru = $request->status_pesanan;
@@ -59,7 +60,7 @@ class AdminPesananController extends Controller
             return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
         }
 
-        // 🔥 LOGIKA OTOMATIS JURUS STOK HARI 7:
+        // 🔥 LOGIKA OTOMATIS JURUS STOK HARI 7 (POTONG STOK):
         // Jika status diubah ke 'diproses' DAN sebelumnya berstatus 'menunggu'
         if ($status_baru === 'diproses' && $pesanan_lama->status_pesanan === 'menunggu') {
             
@@ -84,10 +85,27 @@ class AdminPesananController extends Controller
             }
         }
 
+        // 🔥 LOGIKA BARU (PENGEMBALIAN STOK JIKA DIBATALKAN):
+        // Jika status baru diubah ke 'dibatalkan' DAN status sebelumnya BUKAN 'menunggu' 
+        // (artinya status sebelumnya sudah sempat memotong stok)
+        if ($status_baru === 'dibatalkan' && $pesanan_lama->status_pesanan !== 'menunggu' && $pesanan_lama->status_pesanan !== 'dibatalkan') {
+            
+            // Ambil rincian produk yang dibeli
+            $items = DB::table('detail_pesanan')->where('id_pesanan', $id)->get();
+
+            foreach ($items as $item) {
+                // Kembalikan stok produk (tambahkan kembali senilai qty yang dibatalkan)
+                DB::table('produk')
+                    ->where('id_produk', $item->id_produk)
+                    ->increment('stok', $item->qty);
+            }
+        }
+
         // Update status pesanan di tabel pesanan
         DB::table('pesanan')
             ->where('id_pesanan', $id)
             ->update([
+                // Pastikan nama kolom database disesuaikan, di sini tertulis 'status_pesanan'
                 'status_pesanan' => $status_baru,
                 'updated_at' => now()
             ]);

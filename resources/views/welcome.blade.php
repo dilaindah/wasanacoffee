@@ -10,36 +10,48 @@
 </head>
 <body class="bg-[#fdfaf5] font-sans antialiased">
 
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-amber-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex-shrink-0 flex items-center gap-2">
+   <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-amber-100">
+    <!-- REVISI: Mengubah pembungkus agar lebar penuh (Full Width) ke ujung kiri & kanan layar -->
+    <div class="w-full px-6 sm:px-12">
+        <div class="flex justify-between h-20 items-center">
+            
+            <!-- BAGIAN LOGO & TULISAN (SEKARANG SUDAH MEPEET KE KIRI) -->
+            <div class="flex-shrink-0">
+                <a href="/" class="flex items-center gap-3">
+                    <!-- Logo Gambar -->
+                    <img src="{{ asset('images/logo-wasana-coffee.jpeg') }}" 
+                         alt="Logo Wasana Coffee" 
+                         class="h-12 w-auto object-contain rounded-xl p-0.5 bg-amber-50/50 shadow-sm border border-amber-100">
+                    
+                    <!-- Tulisan Wasana Coffee -->
                     <span class="text-2xl font-bold text-amber-900 tracking-tighter">WASANA<span class="text-amber-600">COFFEE</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center text-sm font-semibold text-amber-900">
-                    <a href="#produk" class="hover:text-amber-600 transition">Beli Kopi</a>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-amber-600 transition">WhatsApp</a>
-                    @auth
-                        <a href="{{ url('/home') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full">Akun Saya</a>
-                    @else
-                        <a href="{{ route('login') }}" class="hover:text-amber-600 transition">Login</a>
-                        <a href="{{ route('register') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full hover:bg-amber-900 transition shadow-md">Register</a>
-                    @endauth
-                </div>
+                </a>
             </div>
-        </div>
-    </nav>
+            
+            <div class="hidden md:flex space-x-8 items-center text-sm font-semibold text-amber-900">
+                <a href="#produk" class="hover:text-amber-600 transition">Beli Kopi</a>
+                <a href="https://wa.me/6282339229700" target="_blank" class="hover:text-amber-600 transition">WhatsApp</a>
+                @auth
+                    <a href="{{ url('/home') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full">Akun Saya</a>
+                @else
+                    <a href="{{ route('login') }}" class="hover:text-amber-600 transition">Login</a>
+                    <a href="{{ route('register') }}" class="px-5 py-2 bg-amber-800 text-white rounded-full hover:bg-amber-900 transition shadow-md">Register</a>
+                @endauth
+            </div>
 
+        </div>
+    </div>
+</nav>
     <section class="relative h-screen flex items-center justify-end overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070" class="w-full h-full object-cover brightness-[0.5]" alt="Background Wasana Coffee">
+            <img src="{{ asset('images/hero-section.png') }}" class="w-full h-full object-cover brightness-[0.5] blur-[3px]" alt="Background Wasana Coffee">
         </div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-right text-white">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">Welcome to<br>Wasana Coffee</h1>
-            <p class="text-xl md:text-2xl font-light italic max-w-xl ml-auto drop-shadow-md text-amber-100">
-                "Satu Sesapan, Berjuta Cerita. Temukan keajaiban biji kopi nusantara yang diproses dengan penuh cinta."
-            </p>
+        <h1 class="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">Welcome to<br>Wasana Coffee</h1>
+        <p class="text-xl md:text-2xl font-light italic max-w-xl ml-auto drop-shadow-md text-amber-100">
+            "Satu Sesapan, Berjuta Cerita. Nikmati keaslian cita rasa premium Arabika Kintamani Bali yang diproses dengan dedikasi nyata. Komitmen kualitas terbaik di setiap cangkir Anda, karena <span class="text-amber-300 font-bold not-italic">Wasana bukan wacana</span>."
+        </p>
         </div>
     </section>
 
@@ -50,8 +62,7 @@
                 <div class="h-1 w-12 bg-amber-600 mx-auto mt-2"></div>
             </h2>
             <p class="text-lg leading-relaxed text-gray-600">
-                Wasana Coffee lahir dari impian untuk menyajikan kopi berkualitas tinggi langsung ke tangan penikmatnya. Bermula dari kedai kecil, kami menjaga tradisi menyangrai biji kopi secara mandiri demi konsistensi rasa yang tak terlupakan. Kami percaya, kopi terbaik adalah kopi yang jujur pada asalnya.
-            </p>
+                Wasana Coffee merupakan UMKM produsen kopi bubuk premium yang berdedikasi menyajikan cita rasa asli Bali langsung ke tangan Anda. Berlokasi di Batubulan, Gianyar, Bali, kami mengolah biji kopi pilihan terbaik, khususnya Kopi Arabika Kintamani melalui proses higienis hingga menjadi bubuk kopi berkualitas tinggi yang siap dinikmati.
         </div>
     </section>
 
@@ -59,13 +70,15 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-amber-950">
             <h2 class="text-3xl font-bold mb-12 text-center">Produk Kami</h2>
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2">
-                    <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=2070" alt="Produk Wasana" class="w-full">
-                </div>
+                <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 -translate-x-16 max-w-sm ml-auto">
+    <img src="{{ asset('images/foto-produk.png') }}" alt="Produk Wasana" class="w-full object-cover aspect-[4/3]">
+</div>
                 <div class="space-y-6">
-                    <h3 class="text-4xl font-bold text-amber-900">Cita Rasa Kopi Wasana</h3>
+                    <h3 class="text-4xl font-bold text-amber-900">Cita Rasa Premium Arabika Kintamani</h3>
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        Biji kopi pilihan yang disangrai dengan presisi untuk menghasilkan aroma yang memikat dan body yang bold. Kami memastikan setiap kemasan yang sampai ke tangan Anda membawa kesegaran maksimal langsung dari hasil kebun petani lokal pilihan.
+                        Wasana Coffee diproses secara higienis hingga menjadi bubuk kopi berkualitas tinggi dengan aroma yang memikat dan karakter rasa yang khas.
+
+Kami menghadirkan dua varian ukuran utama, yaitu 100g dan 250g, untuk memenuhi kebutuhan seduhan harian Anda dengan jaminan kesegaran maksimal langsung ke tangan penikmat kopi lokal.
                     </p>
                     @auth
                         <a href="{{ route('home') }}" class="inline-block bg-amber-800 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-amber-900 transition-all transform hover:scale-105 shadow-xl">

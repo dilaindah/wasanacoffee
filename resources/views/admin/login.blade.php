@@ -6,9 +6,11 @@
     <title>Login Admin - Wasana Coffee</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-amber-100 flex items-center justify-center min-h-screen p-4">
+<!-- REVISI LAYOUT: Mengubah flex agar mendukung scrolling aman di layar HP dan anti-terpotong -->
+<body class="bg-amber-100 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto antialiased">
 
-    <div class="bg-amber-50 p-8 rounded-2xl shadow-xl w-full max-w-md border border-amber-200">
+    <!-- REVISI LAYOUT: Ditambahkan my-auto dan modifikasi padding dinamis p-6 ke p-8 agar pas di semua ukuran Android/iOS -->
+    <div class="bg-amber-50 p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-md border border-amber-200 my-auto">
         
         <div class="text-center mb-6">
             <h2 class="text-2xl font-bold text-amber-900 tracking-wide">Admin Login</h2>

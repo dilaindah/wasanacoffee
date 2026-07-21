@@ -20,7 +20,7 @@
         </div>
 
         <h2 class="text-3xl font-black text-amber-950 mb-2 tracking-tight">Pengaturan Profil</h2>
-        <p class="text-gray-500 text-sm mb-8">Perbarui informasi akun dan alamat pengiriman kopi Wasana adek di sini.</p>
+        <p class="text-gray-500 text-sm mb-8">Perbarui informasi akun dan alamat pengiriman kopi Wasana</p>
 
         <div class="space-y-8">
             
@@ -29,7 +29,7 @@
                 <h3 class="text-lg font-bold text-amber-950 mb-1 flex items-center gap-2">
                     <i class="fa-solid fa-user text-amber-800"></i> Informasi Profil & Alamat
                 </h3>
-                <p class="text-gray-400 text-xs mb-6">Ubah nama, email, nomor HP, serta alamat lengkap rumah adek.</p>
+                <p class="text-gray-400 text-xs mb-6">Ubah nama, email, nomor HP, serta alamat lengkap rumah anda</p>
 
                 @if (session('status') === 'profile-updated')
                     <div class="mb-6 text-xs text-green-700 bg-green-50 p-3.5 rounded-xl border border-green-200 font-bold animate-fadeIn">
@@ -101,7 +101,7 @@
                 <h3 class="text-lg font-bold text-amber-950 mb-1 flex items-center gap-2">
                     <i class="fa-solid fa-lock text-amber-800"></i> Perbarui Password
                 </h3>
-                <p class="text-gray-400 text-xs mb-6">Pastikan akun adek tetap aman menggunakan password yang kuat.</p>
+                <p class="text-gray-400 text-xs mb-6">Pastikan akun anda tetap aman menggunakan password yang kuat.</p>
 
                 @if (session('status') === 'password-updated')
                     <div class="mb-6 text-xs text-green-700 bg-green-50 p-3.5 rounded-xl border border-green-200 font-bold animate-fadeIn">

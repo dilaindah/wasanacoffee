@@ -28,7 +28,7 @@
                     <i class="fa-solid fa-bag-shopping"></i>
                 </div>
                 <h3 class="text-lg font-bold text-amber-950">Belum Ada Pesanan</h3>
-                <p class="text-gray-400 text-xs mt-1 mb-6">Adek belum pernah memesan kopi nih. Yuk pilih varian kopi terbaikmu sekarang!</p>
+                <p class="text-gray-400 text-xs mt-1 mb-6">Anda belum pernah memesan kopi nih. Yuk pilih varian kopi terbaikmu sekarang!</p>
                 <a href="{{ route('pembeli.varian') }}" class="inline-block bg-amber-800 hover:bg-amber-900 text-white font-bold px-6 py-3 rounded-xl text-xs transition-all shadow-md">
                     Pesan Kopi Pertama <i class="fa-solid fa-arrow-right ml-1"></i>
                 </a>

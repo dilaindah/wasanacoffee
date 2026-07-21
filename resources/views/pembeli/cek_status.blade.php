@@ -22,7 +22,7 @@
 
         <div class="text-center mb-8">
             <h2 class="text-3xl font-black text-amber-950 tracking-tight">Cek Status Pesanan</h2>
-            <p class="text-gray-500 text-sm mt-1">Lacak posisi dan status pembuatan kopi Wasana adek secara real-time.</p>
+            <p class="text-gray-500 text-sm mt-1">Lacak status pesanan Kopi Wasana anda</p>
         </div>
 
         <div class="bg-white rounded-[24px] p-6 shadow-xl border border-amber-100 max-w-xl mx-auto mb-8">
